@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_05_130514) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_131231) do
   create_table "account_histories", force: :cascade do |t|
     t.decimal "balance"
     t.integer "account_id", null: false
@@ -35,6 +35,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_130514) do
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
     t.index ["physician_id"], name: "index_appointments_on_physician_id"
+  end
+
+  create_table "assemblies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "assemblies_and_parts", force: :cascade do |t|
+    t.integer "assembly_id"
+    t.integer "part_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assembly_id"], name: "index_assemblies_and_parts_on_assembly_id"
+    t.index ["part_id"], name: "index_assemblies_and_parts_on_part_id"
   end
 
   create_table "authors", force: :cascade do |t|
@@ -63,6 +78,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_130514) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_paragraphs_on_section_id"
+  end
+
+  create_table "parts", force: :cascade do |t|
+    t.string "part_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "patients", force: :cascade do |t|
