@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_05_123347) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_124104) do
   create_table "appointments", force: :cascade do |t|
     t.integer "physician_id", null: false
     t.integer "patient_id", null: false
@@ -35,6 +35,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_123347) do
     t.index ["author_id"], name: "index_books_on_author_id"
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "paragraphs", force: :cascade do |t|
+    t.text "content"
+    t.integer "section_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_paragraphs_on_section_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "name"
     t.date "date_of_birth"
@@ -49,7 +63,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_123347) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string "title"
+    t.integer "document_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_sections_on_document_id"
+  end
+
   add_foreign_key "appointments", "patients"
   add_foreign_key "appointments", "physicians"
   add_foreign_key "books", "authors"
+  add_foreign_key "paragraphs", "sections"
+  add_foreign_key "sections", "documents"
 end
